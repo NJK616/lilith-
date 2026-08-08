@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the studyAbroadRoute property from the routes_data library, for the Dart programming language.">
+  <title>studyAbroadRoute property - routes_data library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">study_planner</a></li>
+    <li><a href="../data_routes_data/">data&#47;routes_data.dart</a></li>
+    <li class="self-crumb">studyAbroadRoute property</li>
+  </ol>
+  <div class="self-name">studyAbroadRoute</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="data_routes_data&#47;data_routes_data-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-top-level-property">studyAbroadRoute</span> top-level property 
+ 
+</h1></div>
+
+        <section class="multi-line-signature">
+          
+          <a href="../models_route_data/RoutePlan-class.html">RoutePlan</a>
+          <span class="name ">studyAbroadRoute</span>
+          <div class="features"><span class="feature">final</span></div>
+
+        </section>
+        
+
+        
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">final studyAbroadRoute = RoutePlan(
+  id: &#39;study_abroad&#39;,
+  name: &#39;出国留学&#39;,
+  icon: &#39;flight&#39;,
+  description: &#39;面向希望出国深造的学生，系统规划语言考试、GPA提升、申请文书全流程&#39;,
+  colorHex: &#39;#F87454&#39;,
+  semesters: [
+    Semester(name: &#39;大一上学期&#39;, tasks: [
+      PlanTask(title: &#39;了解留学基本概念&#39;, description: &#39;搞清楚留学需要准备什么&#39;, priority: &#39;高&#39;, category: &#39;学习&#39;, detailedAdvice: &#39;1. 留学主要国家：美国、英国、加拿大、澳洲、新加坡、香港\n2. 申请要素：GPA + 语言成绩 + 科研&#47;实习 + 文书 + 推荐信\n3. 硕士 vs 博士：硕士自费为主，博士通常有奖学金\n4. 了解目标国家的学制和费用&#39;),
+      PlanTask(title: &#39;保持高GPA&#39;, description: &#39;GPA是留学申请中最重要的硬指标&#39;, priority: &#39;高&#39;, category: &#39;学习&#39;, detailedAdvice: &#39;1. 目标GPA：3.5&#47;4.0以上（美国top30的基本要求）\n2. 英国top10要求均分85+\n3. 大一的课容易拿高分，一定要把握住\n4. 每一门课都不能放松，GPA一旦拉低很难追回&#39;),
+    ]),
+    Semester(name: &#39;大一下学期&#39;, tasks: [
+      PlanTask(title: &#39;开始学英语&#39;, description: &#39;为雅思&#47;托福&#47;GRE打基础&#39;, priority: &#39;高&#39;, category: &#39;技能&#39;, detailedAdvice: &#39;1. 每天背单词：雅思词汇8000+，托福词汇10000+\n2. 听力：每天听BBC、VOA或TED演讲\n3. 口语：找语伴练习，或者用AI口语App\n4. 阅读：开始读英文原版文章或新闻&#39;),
+      PlanTask(title: &#39;确定目标国家&#39;, description: &#39;初步确定想去哪个国家留学&#39;, priority: &#39;中&#39;, category: &#39;学习&#39;, detailedAdvice: &#39;1. 美国：含金量高，费用高，需要GRE&#47;GMAT\n2. 英国：1年制硕士，性价比高，雅思即可\n3. 加拿大：容易移民，费用适中\n4. 澳洲：申请相对容易，环境好\n5. 新加坡&#47;香港：离家近，费用较低，竞争激烈&#39;),
+    ]),
+    Semester(name: &#39;大二上学期&#39;, tasks: [
+      PlanTask(title: &#39;开始准备语言考试&#39;, description: &#39;雅思或托福，选择其一&#39;, priority: &#39;高&#39;, category: &#39;技能&#39;, detailedAdvice: &#39;1. 雅思：去英联邦国家，总分6.5-7.0\n2. 托福：去美国，总分90-100\n3. 报一个培训班（或自学），熟悉考试题型\n4. 大二下学期或大三上学期考第一次&#39;),
+      PlanTask(title: &#39;参加科研项目&#39;, description: &#39;科研经历是留学申请的加分项&#39;, priority: &#39;高&#39;, category: &#39;技能&#39;, detailedAdvice: &#39;1. 主动联系老师，参与科研\n2. 争取发表论文（中文核心或英文会议）\n3. 参加学术会议，拓展视野\n4. 科研经历对推荐信也很重要&#39;),
+      PlanTask(title: &#39;通过英语六级&#39;, description: &#39;六级高分证明英语能力&#39;, priority: &#39;中&#39;, category: &#39;学习&#39;, detailedAdvice: &#39;1. 六级550+在申请季也是一份证明\n2. 六级阅读和雅思&#47;托福阅读有共通之处&#39;),
+    ]),
+    Semester(name: &#39;大二下学期&#39;, tasks: [
+      PlanTask(title: &#39;首次语言考试&#39;, description: &#39;参加第一次雅思&#47;托福考试&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 第一次考试不要期望太高，当练兵\n2. 分析弱项，针对性补强\n3. 如果分数不够，准备第二次考试\n4. 考试费用：雅思约2170元，托福约2100元&#39;),
+      PlanTask(title: &#39;了解GPA换算&#39;, description: &#39;了解不同国家的GPA换算方式&#39;, priority: &#39;中&#39;, category: &#39;学习&#39;, detailedAdvice: &#39;1. 美国：4.0制，3.5+算优秀\n2. 英国：2:1学位（相当于国内85+）\n3. 用WES等机构做GPA认证（部分学校需要）\n4. 如果某些课程拉低了GPA，大三努力拉回来&#39;),
+    ]),
+    Semester(name: &#39;大三上学期&#39;, tasks: [
+      PlanTask(title: &#39;刷语言成绩&#39;, description: &#39;如果分数不够，继续刷分&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 雅思7.0+ &#47; 托福100+ 是比较安全的分数\n2. 如果去美国，开始准备GRE&#47;GMAT\n3. GRE：语文+数学+写作，数学对中国学生不难\n4. GMAT：商科申请专用，更侧重逻辑和商科思维&#39;),
+      PlanTask(title: &#39;开始选校&#39;, description: &#39;研究目标院校和专业&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 参考QS排名、US News排名\n2. 了解每所学校的录取要求、截止日期\n3. 选定8-10所学校：冲刺3所+匹配4所+保底3所\n4. 关注留学论坛（一亩三分地、寄托天下）&#39;),
+    ]),
+    Semester(name: &#39;大三下学期&#39;, tasks: [
+      PlanTask(title: &#39;准备申请文书&#39;, description: &#39;PS&#47;SOP、CV、推荐信&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. PS（个人陈述）：讲好自己的故事，为什么选这个专业\n2. SOP（目的陈述）：更学术化，强调研究兴趣和职业目标\n3. CV（简历）：简洁清晰的学术简历\n4. 推荐信：找2-3位了解你的老师，提前沟通\n5. 反复修改！找学长学姐或留学机构帮忙润色&#39;),
+      PlanTask(title: &#39;完成语言&#47;GRE考试&#39;, description: &#39;在大三结束前拿到所有考试成绩&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 确保所有考试成绩在申请截止前有效\n2. 雅思&#47;托福成绩有效期2年\n3. GRE&#47;GMAT成绩有效期5年\n4. 如果需要送分，提前在官网操作&#39;),
+    ]),
+    Semester(name: &#39;大四上学期&#39;, tasks: [
+      PlanTask(title: &#39;提交申请&#39;, description: &#39;在截止日期前提交所有申请材料&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 美国：大部分12月-1月截止\n2. 英国：滚动录取，先到先得，9月就开始\n3. 加拿大&#47;澳洲：12月-2月截止\n4. 新加坡&#47;香港：11月-1月截止\n5. 提醒推荐人按时提交推荐信\n6. 保留所有申请记录，追踪申请状态&#39;),
+      PlanTask(title: &#39;准备面试&#39;, description: &#39;部分学校会有面试环节&#39;, priority: &#39;中&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 面试形式：视频面试&#47;电话面试&#47;校友面试\n2. 准备问题：自我介绍、为什么选这个学校、研究兴趣\n3. 用英语练习，录音回听\n4. 面试时保持自信和真诚&#39;),
+    ]),
+    Semester(name: &#39;大四下学期&#39;, tasks: [
+      PlanTask(title: &#39;等待offer与选择&#39;, description: &#39;收到offer后理性比较&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 比较因素：学校排名、专业排名、地理位置、费用、就业前景\n2. 如果有奖学金，算清楚总花费\n3. 4月15日前给答复（美国）\n4. 交了留位费后，如果不去，费用不退&#39;),
+      PlanTask(title: &#39;办理签证&#39;, description: &#39;拿到offer后准备签证材料&#39;, priority: &#39;高&#39;, category: &#39;申请&#39;, detailedAdvice: &#39;1. 美国：F-1签证，需要I-20表和SEVIS费\n2. 英国：Tier 4学生签证，需要CAS\n3. 加拿大：学签，需要GIC和体检\n4. 准备资金证明（覆盖学费+生活费）\n5. 提前预约签证面试，不要拖到最后&#39;),
+      PlanTask(title: &#39;行前准备&#39;, description: &#39;机票、住宿、行李、文化适应&#39;, priority: &#39;中&#39;, category: &#39;技能&#39;, detailedAdvice: &#39;1. 订机票：拿到签证后再订\n2. 住宿：校内宿舍 or 校外租房\n3. 行李：不用带太多，大部分东西国外都能买到\n4. 加入新生群，提前认识同学\n5. 学习目的国的文化习俗和基本法律&#39;),
+    ]),
+  ],
+);</code></pre>
+</section>
+
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">study_planner</a></li>
+    <li><a href="../data_routes_data/">routes_data</a></li>
+    <li class="self-crumb">studyAbroadRoute property</li>
+</ol>
+
+    <h5>routes_data library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    study_planner
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

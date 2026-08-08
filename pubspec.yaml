@@ -1,0 +1,39 @@
+name: study_planner
+description: 升学路线规划App - 为大学生提供精准的升学/就业规划指导
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  # 本地存储 — 保存用户问卷结果和路线选择
+  shared_preferences: ^2.2.2
+  # 动画支持
+  animations: ^2.0.8
+  # HTTP 请求 — 调用 AI Agent 后端
+  http: ^1.2.0
+  # Markdown 渲染 — 聊天消息支持富文本
+  flutter_markdown: ^0.7.0
+  # LeanCloud 后端 — 社区功能
+  leancloud_storage: ^0.7.10
+  # 时间格式化
+  intl: ^0.18.1
+  # 图片选择 — 头像功能
+  image_picker: ^1.0.7
+  # 路径获取 — 头像存储
+  path_provider: ^2.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+
+flutter:
+  uses-material-design: true
+  # 如果有图片资源，解注释下面这行
+  # assets:
+  #   - assets/

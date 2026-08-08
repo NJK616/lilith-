@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the recommendRoutes function from the routes_data library, for the Dart programming language.">
+  <title>recommendRoutes function - routes_data library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">study_planner</a></li>
+    <li><a href="../data_routes_data/">data&#47;routes_data.dart</a></li>
+    <li class="self-crumb">recommendRoutes function</li>
+  </ol>
+  <div class="self-name">recommendRoutes</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="data_routes_data&#47;data_routes_data-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">recommendRoutes</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_route_data/RouteRecommendation-class.html">RouteRecommendation</a></span>&gt;</span></span>
+<span class="name ">recommendRoutes</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="recommendRoutes-param-p"><span class="type-annotation"><a href="../models_route_data/UserProfile-class.html">UserProfile</a></span> <span class="parameter-name">p</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>根据用户画像生成带评分的推荐列表</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">List&lt;RouteRecommendation&gt; recommendRoutes(UserProfile p) {
+  final results = &lt;RouteRecommendation&gt;[];
+
+  for (final route in getAllRoutes()) {
+    int score = 50; &#47;&#47; 基础分
+    final reasons = &lt;String&gt;[];
+    final warnings = &lt;String&gt;[];
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第一层：专业硬约束（从数据库读取）
+    &#47;&#47; =============================================
+    final majorEntry = findMajorEntry(p.majorCategory);
+
+    if (majorEntry != null) {
+      &#47;&#47; 应用数据库中的路线匹配度修正
+      switch (route.id) {
+        case &#39;employment&#39;:
+          score += majorEntry.employmentBonus;
+          if (majorEntry.employmentRisk != null) {
+            warnings.add(majorEntry.employmentRisk!);
+          }
+          break;
+        case &#39;postgraduate&#39;:
+          score += majorEntry.postgraduateBonus;
+          if (majorEntry.postgraduateRisk != null) {
+            warnings.add(majorEntry.postgraduateRisk!);
+          }
+          break;
+        case &#39;civil_service&#39;:
+          score += majorEntry.civilServiceBonus;
+          if (majorEntry.civilServiceRisk != null) {
+            warnings.add(majorEntry.civilServiceRisk!);
+          }
+          break;
+        case &#39;study_abroad&#39;:
+          score += majorEntry.studyAbroadBonus;
+          if (majorEntry.studyAbroadRisk != null) {
+            warnings.add(majorEntry.studyAbroadRisk!);
+          }
+          break;
+      }
+
+      &#47;&#47; 专业关键建议（对所有路线都有参考价值）
+      if (majorEntry.keyAdvice.isNotEmpty) {
+        reasons.add(&#39;【${majorEntry.name}】${majorEntry.keyAdvice}&#39;);
+      }
+    }
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第二层：院校层次修正（关键！985&#47;211&#47;普通本科差异巨大）
+    &#47;&#47; =============================================
+    final tier = p.schoolTier;
+    if (tier == &#39;985&#39;) {
+      &#47;&#47; 985 红利
+      if (route.id == &#39;postgraduate&#39;) {
+        score += 10;
+        reasons.add(&#39;985高校保研率高（20-35%），保研是主要升学通道&#39;);
+      }
+      if (route.id == &#39;civil_service&#39;) {
+        score += 15;
+        reasons.add(&#39;985可走中央选调+各省定向选调，是进入体制的快车道&#39;);
+      }
+      if (route.id == &#39;study_abroad&#39;) {
+        score += 10;
+        reasons.add(&#39;985本科是海外名校最认可的国内学历背景&#39;);
+      }
+      if (route.id == &#39;employment&#39;) {
+        score += 5;
+        reasons.add(&#39;985是大厂校招目标院校，简历不会被筛&#39;);
+      }
+    } else if (tier == &#39;211&#39;) {
+      if (route.id == &#39;postgraduate&#39;) {
+        score += 5;
+        reasons.add(&#39;211保研率10-18%，排名靠前可争取保研&#39;);
+      }
+      if (route.id == &#39;civil_service&#39;) {
+        score += 5;
+        reasons.add(&#39;211可走部分省份定向选调，国考中无劣势&#39;);
+      }
+      if (route.id == &#39;study_abroad&#39;) {
+        score += 3;
+        reasons.add(&#39;211申请海外名校有一定竞争力，需更高GPA&#39;);
+      }
+      if (route.id == &#39;employment&#39;) {
+        score += 2;
+        reasons.add(&#39;211通常在大厂校招名单中，简历关基本能过&#39;);
+      }
+    } else if (tier == &#39;双一流&#39;) {
+      if (route.id == &#39;postgraduate&#39;) {
+        score += 3;
+        reasons.add(&#39;双一流保研率因校而异，需了解本校政策&#39;);
+      }
+      if (route.id == &#39;civil_service&#39;) {
+        score += 3;
+        reasons.add(&#39;双一流部分省份可走定向选调，需查询目标省份&#39;);
+      }
+    } else if (tier == &#39;普通本科&#39;) {
+      if (route.id == &#39;employment&#39;) {
+        score -= 10;
+        warnings.add(&#39;普通本科大厂校招简历关可能被筛，需用实习&#47;项目&#47;竞赛弥补&#39;);
+      }
+      if (route.id == &#39;postgraduate&#39;) {
+        score -= 5;
+        warnings.add(&#39;普通本科基本无保研名额，只能硬考；复试时可能需比985考生高10-15分&#39;);
+      }
+      if (route.id == &#39;civil_service&#39;) {
+        score -= 5;
+        warnings.add(&#39;普通本科无法走选调生通道，只能参加国考&#47;省考，竞争激烈&#39;);
+      }
+      if (route.id == &#39;study_abroad&#39;) {
+        score -= 15;
+        warnings.add(&#39;普通本科申请海外名校难度极大，需降档申请或先考研再出国&#39;);
+      }
+    }
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第三层：年级时间线约束
+    &#47;&#47; =============================================
+    if (route.id == &#39;study_abroad&#39; &amp;&amp; (p.grade == &#39;大三&#39; || p.grade == &#39;大四&#39;)) {
+      if (p.english == &#39;不太好&#39;) {
+        score -= 30;
+        warnings.add(&#39;大三&#47;大四才开始准备出国+英语不好，时间非常紧张&#39;);
+      } else if (p.english == &#39;一般&#39;) {
+        score -= 15;
+        warnings.add(&#39;大三&#47;大四准备出国时间偏晚，需要立刻开始语言考试&#39;);
+      }
+    }
+
+    if (route.id == &#39;postgraduate&#39; &amp;&amp; p.grade == &#39;大四&#39;) {
+      score -= 10;
+      warnings.add(&#39;大四才开始准备考研，只能参加下一年考研（gap一年）&#39;);
+    }
+
+    if (route.id == &#39;civil_service&#39; &amp;&amp; p.grade == &#39;大四&#39;) {
+      if (!p.isPartyMember) {
+        score -= 5;
+        warnings.add(&#39;非党员不能走选调生通道，只能参加普通国考&#47;省考&#39;);
+      }
+    }
+
+    if (route.id == &#39;employment&#39; &amp;&amp; p.grade == &#39;大四&#39;) {
+      if (!p.hasInternship) {
+        score -= 15;
+        warnings.add(&#39;大四还没有实习经历，秋招简历会比较吃亏&#39;);
+      }
+    }
+
+    &#47;&#47; 大一入学 —— 所有路线都来得及，加分
+    if (p.grade == &#39;大一&#39;) {
+      score += 5;
+      reasons.add(&#39;大一入学，时间充裕，所有路线都来得及准备&#39;);
+    }
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第四层：硬指标约束
+    &#47;&#47; =============================================
+    if (route.id == &#39;study_abroad&#39;) {
+      if (p.economy == &#39;一般&#39;) {
+        score -= 25;
+        warnings.add(&#39;家庭经济压力较大，出国留学费用高昂（英美40-60万&#47;年）&#39;);
+      } else if (p.economy == &#39;中等&#39;) {
+        score -= 10;
+        warnings.add(&#39;出国留学费用较高，建议优先考虑德国、法国等低学费国家&#39;);
+      }
+      if (p.english == &#39;不太好&#39;) {
+        score -= 20;
+        warnings.add(&#39;英语是出国留学的硬门槛，需要从现在开始全力提升&#39;);
+      }
+      if (p.gpa == &#39;3.0以下&#39;) {
+        score -= 20;
+        warnings.add(&#39;GPA偏低，申请好学校难度大，只能降低目标院校档次&#39;);
+      }
+    }
+
+    if (route.id == &#39;postgraduate&#39;) {
+      if (p.gpa == &#39;3.0以下&#39;) {
+        score -= 15;
+        warnings.add(&#39;GPA偏低，考研复试和保研都会受影响，需要初试高分弥补&#39;);
+      }
+      if (p.gpa == &#39;3.5+&#39; &amp;&amp; p.grade == &#39;大一&#39;) {
+        score += 5;
+        reasons.add(&#39;GPA高，有保研潜力，提前规划可争取保研名额&#39;);
+      }
+    }
+
+    if (route.id == &#39;civil_service&#39;) {
+      if (p.isPartyMember) {
+        score += 10;
+        reasons.add(&#39;党员身份对考公有明显优势，可走选调生通道&#39;);
+      }
+      if (p.gpa == &#39;3.5+&#39;) {
+        score += 3;
+        reasons.add(&#39;高GPA满足多数选调生的成绩排名要求&#39;);
+      }
+    }
+
+    if (route.id == &#39;employment&#39;) {
+      if (p.hasInternship) {
+        score += 10;
+        reasons.add(&#39;已有实习经历，秋招时有竞争力&#39;);
+      }
+      if (p.gpa == &#39;3.0以下&#39;) {
+        score -= 5;
+        warnings.add(&#39;部分大厂校招有GPA门槛（通常3.0以上）&#39;);
+      }
+    }
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第五层：意愿匹配（软性）
+    &#47;&#47; =============================================
+    switch (p.value) {
+      case &#39;高薪&#39;:
+        if (route.id == &#39;employment&#39;) { score += 8; reasons.add(&#39;本科就业起薪高于大多数体制内岗位&#39;); }
+        if (route.id == &#39;study_abroad&#39;) { score += 8; reasons.add(&#39;留学背景+海外经历有助于进入高薪行业&#39;); }
+        if (route.id == &#39;civil_service&#39;) { score -= 5; warnings.add(&#39;公务员薪资稳定但天花板较低，与高薪诉求有差距&#39;); }
+        break;
+      case &#39;稳定&#39;:
+        if (route.id == &#39;civil_service&#39;) { score += 10; reasons.add(&#39;公务员&#47;事业编是最稳定的职业选择&#39;); }
+        if (route.id == &#39;postgraduate&#39;) { score += 5; reasons.add(&#39;读研后考公起点更高（副科级待遇）&#39;); }
+        break;
+      case &#39;兴趣&#39;:
+        if (route.id == &#39;postgraduate&#39;) { score += 5; reasons.add(&#39;读研可以深入钻研感兴趣的领域&#39;); }
+        if (route.id == &#39;study_abroad&#39;) { score += 5; reasons.add(&#39;出国留学可以接触不同学术体系，拓宽视野&#39;); }
+        break;
+      case &#39;社会地位&#39;:
+        if (route.id == &#39;civil_service&#39;) { score += 10; reasons.add(&#39;公务员社会地位高，受人尊敬&#39;); }
+        if (route.id == &#39;postgraduate&#39;) { score += 5; reasons.add(&#39;高学历在传统观念中有较高的社会认可度&#39;); }
+        break;
+    }
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第六层：加分项
+    &#47;&#47; =============================================
+    if (p.hasResearch) {
+      if (route.id == &#39;postgraduate&#39;) { score += 5; reasons.add(&#39;科研经历对考研复试和保研有加分&#39;); }
+      if (route.id == &#39;study_abroad&#39;) { score += 5; reasons.add(&#39;科研经历对留学申请（尤其申博）有加分&#39;); }
+    }
+    if (p.english == &#39;很好&#39;) {
+      if (route.id == &#39;study_abroad&#39;) { score += 5; reasons.add(&#39;英语好是出国留学的基本保障&#39;); }
+      if (route.id == &#39;employment&#39;) { score += 3; reasons.add(&#39;英语好有助于进入外企或出海业务岗位&#39;); }
+    }
+
+    &#47;&#47; =============================================
+    &#47;&#47; 第七层：转专业双路径逻辑
+    &#47;&#47; =============================================
+    if (p.wantsTransfer &amp;&amp; p.targetMajorCategory != null) {
+      &#47;&#47; 读取目标专业的数据
+      final targetMajor = findMajorEntry(p.targetMajorCategory!);
+
+      &#47;&#47; 添加转专业相关提示
+      reasons.add(&#39;【转专业规划】当前推荐基于转专业成功后的路线，大一阶段需同时准备转专业申请&#39;);
+
+      &#47;&#47; 如果目标专业与当前专业的路线匹配度差异较大
+      if (targetMajor != null &amp;&amp; majorEntry != null) {
+        &#47;&#47; 目标专业就业路线修正
+        if (route.id == &#39;employment&#39;) {
+          final delta = targetMajor.employmentBonus - majorEntry.employmentBonus;
+          if (delta &gt; 5) {
+            reasons.add(&#39;【转专业优势】转到${targetMajor.name}后，本科就业前景明显改善&#39;);
+          } else if (delta &lt; -5) {
+            warnings.add(&#39;【转专业注意】当前专业本科就业优于${targetMajor.name}，请确认转专业意愿&#39;);
+          }
+        }
+        if (route.id == &#39;postgraduate&#39;) {
+          final delta = targetMajor.postgraduateBonus - majorEntry.postgraduateBonus;
+          if (delta &gt; 5) {
+            reasons.add(&#39;【转专业优势】转到${targetMajor.name}后，读研性价比更高&#39;);
+          }
+        }
+        if (route.id == &#39;civil_service&#39;) {
+          final delta = targetMajor.civilServiceBonus - majorEntry.civilServiceBonus;
+          if (delta &gt; 5) {
+            reasons.add(&#39;【转专业优势】${targetMajor.name}考公岗位更多，竞争更小&#39;);
+          }
+        }
+      }
+
+      &#47;&#47; 通用转专业警告
+      warnings.add(&#39;【转专业风险】转专业有不确定性（通常录取率10-30%），建议做好两手准备：转专业成功按此路线，失败则需重新评估&#39;);
+    }
+
+    if (p.wantsTransfer &amp;&amp; p.targetMajorCategory == null) {
+      warnings.add(&#39;【转专业提示】已选择转专业但未指定目标专业，建议明确目标后重新规划&#39;);
+    }
+
+    &#47;&#47; 限制分数范围
+    score = score.clamp(0, 100);
+
+    &#47;&#47; 生成匹配度标签
+    final label = score &gt;= 80 ? &#39;强烈推荐&#39;
+        : score &gt;= 60 ? &#39;适合你&#39;
+        : score &gt;= 35 ? &#39;可考虑&#39;
+        : &#39;不太推荐&#39;;
+
+    &#47;&#47; 计算起始学期
+    final startIndex = gradeToSemesterIndex(p.grade);
+
+    results.add(RouteRecommendation(
+      route: route,
+      score: score,
+      matchLabel: label,
+      reasons: reasons,
+      warnings: warnings,
+      startSemesterIndex: startIndex,
+    ));
+  }
+
+  &#47;&#47; 按分数从高到低排序
+  results.sort((a, b) =&gt; b.score.compareTo(a.score));
+  return results;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">study_planner</a></li>
+    <li><a href="../data_routes_data/">routes_data</a></li>
+    <li class="self-crumb">recommendRoutes function</li>
+</ol>
+
+    <h5>routes_data library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    study_planner
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
