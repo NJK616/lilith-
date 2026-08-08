@@ -2,6 +2,14 @@
 
 大学生升学规划助手 —— 帮你在大一到大四每个阶段，找到最适合的升学路径。
 
+## 截图
+
+<div align="center">
+  <img src="screenshots/screenshot_route.jpg" width="30%" alt="路线推荐" />
+  <img src="screenshots/screenshot_dashboard.jpg" width="30%" alt="任务仪表盘" />
+  <img src="screenshots/screenshot_profile.jpg" width="30%" alt="个人中心" />
+</div>
+
 ## 功能
 
 - **问卷评估**：填写年级、院校、专业、GPA、英语水平等信息，系统智能推荐路线
@@ -18,6 +26,10 @@
 - Flutter 3.x (Dart)
 - 本地账号系统 (SharedPreferences)
 - 本地数据驱动 (专业数据库 / 院校数据库 / 路线规划)
+
+## 下载
+
+最新版本：https://github.com/NJK616/lilith-/releases/latest
 
 ## 构建
 
